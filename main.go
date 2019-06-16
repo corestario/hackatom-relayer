@@ -102,8 +102,6 @@ func GetRelayPacket(cliCtxSource, cliCtx context.CLIContext) (ibc.Packet, ibc.Pr
 	}
 	cdc.MustUnmarshalBinaryBare(packetbz, &packet)
 
-	ibcIsGreatFix++
-
 	return &packet, proof, nil
 }
 
@@ -197,6 +195,8 @@ func sendTokenToHub(st types.SellTokenPacket) error {
 
 		resp.Body.Close()
 	}
+
+	ibcIsGreatFix++
 
 	return nil
 }
