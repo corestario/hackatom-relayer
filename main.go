@@ -1,17 +1,21 @@
 package main
 
 import (
+	"bytes"
 	"dgamingfoundation/hackatom-relayer/zoneA"
 	"dgamingfoundation/hackatom-relayer/zoneB"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"math"
+	"net/http"
 
 	"github.com/cosmos/cosmos-sdk/client/context"
 	"github.com/cosmos/cosmos-sdk/store/state"
 	"github.com/cosmos/cosmos-sdk/x/ibc/23-commitment/merkle"
 	rpcclient "github.com/tendermint/tendermint/rpc/client"
+	"github.com/cosmos/cosmos-sdk/types/rest"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	cli "github.com/cosmos/cosmos-sdk/x/ibc/client/utils"
@@ -36,6 +40,9 @@ func main() {
 	}
 
 	fmt.Printf("%+v\n", st)
+
+	//curl
+	sendTokenToHub(st)
 }
 
 func GetRelayPacket(cliCtxSource, cliCtx context.CLIContext) (ibc.Packet, ibc.Proof, error) {
@@ -134,4 +141,56 @@ func query(ctx context.CLIContext, key []byte) ([]byte, merkle.Proof, error) {
 		Key:   key,
 		Proof: resp.Proof,
 	}, nil
+}
+
+type putOnMarketNFTReq struct {
+	BaseReq rest.BaseReq `json:"base_req"`
+	Owner   string       `json:"owner"`
+	Token   BaseNFT      `json:"token"`
+	Price   string       `json:"price"`
+
+	// User data
+	Name     string `json:"name"`
+	Password string `json:"password"`
+}
+
+func sendTokenToHub(st types.SellTokenPacket) error {
+	hubURL := "http://localhost:1317/nft/sell"
+	ownerName := "jack"
+	ownerPassword := "12345678"
+	ownerAddr := "aabbccdd00ff"
+
+	reqObject := putOnMarketNFTReq{
+		rest.BaseReq{
+			From: ownerName,
+			ChainID: "hhchain",
+			Sequence: 0,
+			AccountNumber: 1,
+		},
+		ownerAddr,
+		*st.Token,
+		st.Price,
+		ownerName,
+		ownerPassword,
+	}
+
+	reqBytes, err := json.Marshal(reqObject)
+	if err != nil {
+		return err
+	}
+
+	req, err := http.NewRequest("POST", hubURL, bytes.NewBuffer(reqBytes))
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	fmt.Println("response Status:", resp.Status)
+	fmt.Println("response Headers:", resp.Header)
+	body, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println("response Body:", string(body))
 }
