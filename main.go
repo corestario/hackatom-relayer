@@ -13,16 +13,15 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/client/context"
 	"github.com/cosmos/cosmos-sdk/store/state"
+	"github.com/cosmos/cosmos-sdk/types/rest"
 	"github.com/cosmos/cosmos-sdk/x/ibc/23-commitment/merkle"
 	rpcclient "github.com/tendermint/tendermint/rpc/client"
-	"github.com/cosmos/cosmos-sdk/types/rest"
 
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	cli "github.com/cosmos/cosmos-sdk/x/ibc/client/utils"
 	ibc "github.com/cosmos/cosmos-sdk/x/ibc/keeper"
 	"github.com/dgamingfoundation/hackatom-zone/x/nftapp/types"
 	"github.com/spf13/viper"
-	sdk "github.com/cosmos/cosmos-sdk/types"
-
 )
 
 func main() {
@@ -120,10 +119,10 @@ func query(ctx context.CLIContext, key []byte) ([]byte, merkle.Proof, error) {
 }
 
 type putOnMarketNFTReq struct {
-	BaseReq rest.BaseReq `json:"base_req"`
-	Owner   string       `json:"owner"`
+	BaseReq rest.BaseReq  `json:"base_req"`
+	Owner   string        `json:"owner"`
 	Token   types.BaseNFT `json:"token"`
-	Price   sdk.Coin    `json:"price"`
+	Price   sdk.Coin      `json:"price"`
 
 	// User data
 	Name     string `json:"name"`
@@ -136,12 +135,11 @@ func sendTokenToHub(st types.SellTokenPacket) error {
 	ownerPassword := "12345678"
 	ownerAddr := "cosmos16y2vaas25ea8n353tfve45rwvt4sx0gl627pzn"
 
-
 	reqObject := putOnMarketNFTReq{
 		rest.BaseReq{
-			From: ownerAddr,
-			ChainID: "hhchain",
-			Sequence: 3,
+			From:          ownerAddr,
+			ChainID:       "hhchain",
+			Sequence:      3,
 			AccountNumber: 0,
 		},
 		ownerAddr,
@@ -151,7 +149,7 @@ func sendTokenToHub(st types.SellTokenPacket) error {
 		ownerPassword,
 	}
 
-	cdc:=app.MakeCodec()
+	cdc := app.MakeCodec()
 	reqBytes, err := cdc.MarshalJSON(reqObject)
 	if err != nil {
 		return err
