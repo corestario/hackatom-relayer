@@ -57,6 +57,8 @@ func main() {
 	}
 }
 
+var ibcIsGreatFix = uint64(1)
+
 func GetRelayPacket(cliCtxSource, cliCtx context.CLIContext) (ibc.Packet, ibc.Proof, error) {
 	keeper := ibc.DummyKeeper()
 	cdc := cliCtx.Codec
@@ -89,12 +91,14 @@ func GetRelayPacket(cliCtxSource, cliCtx context.CLIContext) (ibc.Packet, ibc.Pr
 	}
 
 	var packet types.SellTokenPacket
-	fmt.Println(obj.Packets.Value(seq + 1).Key())
-	packetbz, proof, err := query(cliCtxSource, obj.Packets.Value(seq+1).Key())
+	fmt.Println(obj.Packets.Value(seq + ibcIsGreatFix).Key())
+	packetbz, proof, err := query(cliCtxSource, obj.Packets.Value(seq+ibcIsGreatFix).Key())
 	if err != nil {
 		return nil, nil, err
 	}
 	cdc.MustUnmarshalBinaryBare(packetbz, &packet)
+
+	ibcIsGreatFix++
 
 	return &packet, proof, nil
 }
