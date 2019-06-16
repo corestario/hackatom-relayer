@@ -119,7 +119,7 @@ func query(ctx context.CLIContext, key []byte) ([]byte, merkle.Proof, error) {
 type putOnMarketNFTReq struct {
 	BaseReq rest.BaseReq `json:"base_req"`
 	Owner   string       `json:"owner"`
-	Token   BaseNFT      `json:"token"`
+	Token   types.BaseNFT `json:"token"`
 	Price   string       `json:"price"`
 
 	// User data
@@ -142,7 +142,7 @@ func sendTokenToHub(st types.SellTokenPacket) error {
 		},
 		ownerAddr,
 		*st.Token,
-		st.Price,
+		st.Price.String(),
 		ownerName,
 		ownerPassword,
 	}
@@ -166,4 +166,6 @@ func sendTokenToHub(st types.SellTokenPacket) error {
 	fmt.Println("response Headers:", resp.Header)
 	body, _ := ioutil.ReadAll(resp.Body)
 	fmt.Println("response Body:", string(body))
+
+	return nil
 }

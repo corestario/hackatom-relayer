@@ -45,6 +45,8 @@ github.com/dgamingfoundation/hackatom-zone v0.0.0-20190615154527-c71e3ff7b97b h1
 github.com/dgamingfoundation/hackatom-zone v0.0.0-20190615154527-c71e3ff7b97b/go.mod h1:lLRAgZaCxDgBySXlTBAGdGqyMZyQ5HkeizNw/vlOWJ8=
 github.com/dgamingfoundation/hackatom-zone v0.0.0-20190616130940-7d62d37c4d6d h1:/Rig9HdQ82oMy0hZsmsbOqFabL1y/nX569RMArsZF6Y=
 github.com/dgamingfoundation/hackatom-zone v0.0.0-20190616130940-7d62d37c4d6d/go.mod h1:zAJVVYPnBLmIAYVtpmnakuWwbtrnDuggT9rla+0Jakc=
+github.com/dgamingfoundation/hackatom-zone v0.0.0-20190616134104-f460989658c6 h1:ABXTNEICP/7KWXgSuOX0OSEDK3F0Bht1K2VDoiMYq+Y=
+github.com/dgamingfoundation/hackatom-zone v0.0.0-20190616134104-f460989658c6/go.mod h1:zAJVVYPnBLmIAYVtpmnakuWwbtrnDuggT9rla+0Jakc=
 github.com/dgamingfoundation/nftapp v0.0.0-20190615104650-2e087bea1ee6 h1:5QFOqVmyPa2e4bFZtwnIongHP5VOH4KR7TB2fswrkTY=
 github.com/dgamingfoundation/nftapp v0.0.0-20190615104650-2e087bea1ee6/go.mod h1:cO4b1/LaZxLyQdC2fDt8k9Kr+f22s2yFebhTxwLi5AM=
 github.com/fortytw2/leaktest v1.3.0/go.mod h1:jDsjWgpAGjm2CA7WthBh/CdZYEPF31XHquHwclZch5g=

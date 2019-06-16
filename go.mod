@@ -5,7 +5,7 @@ go 1.12
 require (
 	github.com/cosmos/cosmos-sdk v0.28.2-0.20190616123619-7efb69cb3708
 	github.com/dgamingfoundation/hackatom-marketplace v0.0.0-20190616150019-ccd569a4590c
-	github.com/dgamingfoundation/hackatom-zone v0.0.0-20190616130940-7d62d37c4d6d
+	github.com/dgamingfoundation/hackatom-zone v0.0.0-20190616134104-f460989658c6
 	github.com/gorilla/mux v1.7.0
 	github.com/pkg/errors v0.8.1
 	github.com/satori/go.uuid v1.2.0
