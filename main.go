@@ -6,14 +6,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"math"
 
 	"github.com/cosmos/cosmos-sdk/client/context"
 	"github.com/cosmos/cosmos-sdk/store/state"
 	"github.com/cosmos/cosmos-sdk/x/ibc/23-commitment/merkle"
 	rpcclient "github.com/tendermint/tendermint/rpc/client"
 
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	cli "github.com/cosmos/cosmos-sdk/x/ibc/client/utils"
 	ibc "github.com/cosmos/cosmos-sdk/x/ibc/keeper"
 	"github.com/dgamingfoundation/hackatom-zone/x/nftapp/types"
@@ -69,7 +67,7 @@ func GetRelayPacket(cliCtxSource, cliCtx context.CLIContext) (ibc.Packet, ibc.Pr
 		return nil, nil, errors.New("no packet detected")
 	}
 
-	var packet SellTokenPacket
+	var packet types.SellTokenPacket
 	fmt.Println(obj.Packets.Value(seq + 1).Key())
 	packetbz, proof, err := query(cliCtxSource, obj.Packets.Value(seq+1).Key())
 	if err != nil {
@@ -78,34 +76,6 @@ func GetRelayPacket(cliCtxSource, cliCtx context.CLIContext) (ibc.Packet, ibc.Pr
 	cdc.MustUnmarshalBinaryBare(packetbz, &packet)
 
 	return packet, proof, nil
-}
-
-type SellTokenPacket struct {
-	Token *BaseNFT `json:"token"`
-	Price sdk.Coin `json:"price"`
-}
-
-func (m SellTokenPacket) Timeout() uint64 {
-	return math.MaxUint64
-}
-
-func (m SellTokenPacket) Commit() []byte {
-	data, err := json.Marshal(m)
-	if err != nil {
-		panic(fmt.Errorf("failed to marshal SellTokenPacket packet: %v", err))
-	}
-
-	return data
-}
-
-// BaseNFT non fungible token definition
-type BaseNFT struct {
-	ID          string         `json:"id,omitempty"`       // id of the token; not exported to clients
-	Owner       sdk.AccAddress `json:"owner,string"`       // account address that owns the NFT
-	Name        string         `json:"name,string"`        // name of the token
-	Description string         `json:"description,string"` // unique description of the NFT
-	Image       string         `json:"image,string"`       // image path
-	TokenURI    string         `json:"token_uri,string"`   // optional extra properties available fo querying
 }
 
 // Copied from client/context/query.go
