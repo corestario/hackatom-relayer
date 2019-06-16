@@ -172,26 +172,27 @@ func sendTokenToHub(st types.SellTokenPacket) error {
 			continue
 		}
 
-		if len(reqBytes) != 0 {
-			break
+		if len(reqBytes) == 0 {
+			continue
 		}
+		fmt.Println(string(reqBytes))
+
+		req, err := http.NewRequest("POST", hubURL, bytes.NewBuffer(reqBytes))
+		req.Header.Set("Content-Type", "application/json")
+
+		client := &http.Client{}
+		resp, err := client.Do(req)
+		if err != nil {
+			continue
+		}
+
+		fmt.Println("response Status:", resp.Status)
+		fmt.Println("response Headers:", resp.Header)
+		body, _ := ioutil.ReadAll(resp.Body)
+		fmt.Println("response Body:", string(body))
+
+		resp.Body.Close()
 	}
-	fmt.Println(string(reqBytes))
-
-	req, err := http.NewRequest("POST", hubURL, bytes.NewBuffer(reqBytes))
-	req.Header.Set("Content-Type", "application/json")
-
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-
-	fmt.Println("response Status:", resp.Status)
-	fmt.Println("response Headers:", resp.Header)
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println("response Body:", string(body))
 
 	return nil
 }
