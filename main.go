@@ -144,24 +144,33 @@ func sendTokenToHub(st types.SellTokenPacket) error {
 	ownerPassword := "12345678"
 	ownerAddr := "cosmos16y2vaas25ea8n353tfve45rwvt4sx0gl627pzn"
 
-	reqObject := putOnMarketNFTReq{
-		rest.BaseReq{
-			From:          ownerAddr,
-			ChainID:       "hhchain",
-			Sequence:      4,
-			AccountNumber: 0,
-		},
-		ownerAddr,
-		*st.Token,
-		st.Price,
-		ownerName,
-		ownerPassword,
-	}
+	var reqBytes []byte
+	var err error
+	for i:= 0; i < 20; i++ {
+		reqObject := putOnMarketNFTReq{
+			rest.BaseReq{
+				From:          ownerAddr,
+				ChainID:       "hhchain",
+				Sequence:      uint64(i),
+				AccountNumber: 0,
+			},
+			ownerAddr,
+			*st.Token,
+			st.Price,
+			ownerName,
+			ownerPassword,
+		}
 
-	cdc := app.MakeCodec()
-	reqBytes, err := cdc.MarshalJSON(reqObject)
-	if err != nil {
-		return err
+		cdc := app.MakeCodec()
+		reqBytes, err = cdc.MarshalJSON(reqObject)
+		if err != nil {
+			fmt.Println("error while getting sell token", err.Error())
+			continue
+		}
+
+		if len(reqBytes) != 0 {
+			break
+		}
 	}
 	fmt.Println(string(reqBytes))
 
