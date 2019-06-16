@@ -16,7 +16,7 @@ import (
 	bankcmd "github.com/cosmos/cosmos-sdk/x/bank/client/cli"
 	ibccli "github.com/cosmos/cosmos-sdk/x/ibc/client/cli"
 	"github.com/dgamingfoundation/hackatom-zone/x/nftapp/types"
-	app "github.com/dgamingfoundation/hackatom-zoneB"
+	app "github.com/dgamingfoundation/hackatom-marketplace"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	amino "github.com/tendermint/go-amino"
