@@ -139,7 +139,7 @@ func sendTokenToHub(st types.SellTokenPacket) error {
 		rest.BaseReq{
 			From:          ownerAddr,
 			ChainID:       "hhchain",
-			Sequence:      3,
+			Sequence:      4,
 			AccountNumber: 0,
 		},
 		ownerAddr,

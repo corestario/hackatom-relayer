@@ -41,6 +41,8 @@ github.com/dgamingfoundation/hackatom-marketplace v0.0.0-20190616145257-feaf55f2
 github.com/dgamingfoundation/hackatom-marketplace v0.0.0-20190616145257-feaf55f26dce/go.mod h1:uROcOHlp54E41ZJuDlmqVpX8U/Ql4GGSYdxz2KCBz1Y=
 github.com/dgamingfoundation/hackatom-marketplace v0.0.0-20190616150019-ccd569a4590c h1:CXrrbuv3DQ17iYVEZlSsHNRQRmflyHfRCi1Ikrb7gUo=
 github.com/dgamingfoundation/hackatom-marketplace v0.0.0-20190616150019-ccd569a4590c/go.mod h1:uROcOHlp54E41ZJuDlmqVpX8U/Ql4GGSYdxz2KCBz1Y=
+github.com/dgamingfoundation/hackatom-marketplace v0.0.0-20190616153241-bd9f37bb6f2c h1:suan+MdMm6qFtr+PFzHppy+5+oRxGJ4Z/OIg9cGuZ+8=
+github.com/dgamingfoundation/hackatom-marketplace v0.0.0-20190616153241-bd9f37bb6f2c/go.mod h1:uROcOHlp54E41ZJuDlmqVpX8U/Ql4GGSYdxz2KCBz1Y=
 github.com/dgamingfoundation/hackatom-zone v0.0.0-20190615154527-c71e3ff7b97b h1:kKZtxsOcbS8M4IkQ8Sak5/jpaDMzMH1nth8AHHfTKmU=
 github.com/dgamingfoundation/hackatom-zone v0.0.0-20190615154527-c71e3ff7b97b/go.mod h1:lLRAgZaCxDgBySXlTBAGdGqyMZyQ5HkeizNw/vlOWJ8=
 github.com/dgamingfoundation/hackatom-zone v0.0.0-20190616130940-7d62d37c4d6d h1:/Rig9HdQ82oMy0hZsmsbOqFabL1y/nX569RMArsZF6Y=
