@@ -53,6 +53,10 @@ func main() {
 		fmt.Printf("------------%+v\n", st)
 
 		//curl
+		if st.Token == nil {
+			continue
+		}
+
 		sendTokenToHub(st)
 	}
 }
@@ -151,10 +155,6 @@ func sendTokenToHub(st types.SellTokenPacket) error {
 	var reqBytes []byte
 	var err error
 	for i:= 0; i < 20; i++ {
-		if st.Token == nil {
-			continue
-		}
-
 		reqObject := putOnMarketNFTReq{
 			rest.BaseReq{
 				From:          ownerAddr,
