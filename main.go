@@ -10,6 +10,7 @@ import (
 	app "github.com/dgamingfoundation/hackatom-marketplace"
 	"io/ioutil"
 	"net/http"
+	"time"
 
 	"github.com/cosmos/cosmos-sdk/client/context"
 	"github.com/cosmos/cosmos-sdk/store/state"
@@ -25,26 +26,34 @@ import (
 )
 
 func main() {
+	ticker := time.NewTicker(100*time.Millisecond)
+
 	viper.Set("trust-node", true)
 
 	cliA := zoneA.GetCLIContext()
 	cliB := zoneB.GetCLIContext()
-	packet, _, err := GetRelayPacket(cliA, cliB)
-	if err != nil {
-		panic(fmt.Errorf("failed to GetRelayPacket: %v", err))
-	}
 
-	var st types.SellTokenPacket
-	if err := json.Unmarshal(packet.Commit(), &st); err != nil {
-		panic(fmt.Errorf("failed to unmarshal SellTokenPacket: %v", err))
-	}
+	i := 0
 
-	fmt.Printf("------------%+v\n", st)
+	for range ticker.C {
+		i++
+		if i % 10 == 0 {
+			fmt.Println("try", i)
+		}
 
-	//curl
-	err = sendTokenToHub(st)
-	if err != nil {
-		panic(err)
+		packet, _, _ := GetRelayPacket(cliA, cliB)
+
+		if packet == nil {
+			continue
+		}
+
+		var st types.SellTokenPacket
+		json.Unmarshal(packet.Commit(), &st)
+
+		fmt.Printf("------------%+v\n", st)
+
+		//curl
+		sendTokenToHub(st)
 	}
 }
 
