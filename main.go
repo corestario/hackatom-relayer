@@ -129,9 +129,9 @@ type putOnMarketNFTReq struct {
 
 func sendTokenToHub(st types.SellTokenPacket) error {
 	hubURL := "http://localhost:1317/nft/sell"
-	ownerName := "jack"
+	ownerName := "alice"
 	ownerPassword := "12345678"
-	ownerAddr := "aabbccdd00ff"
+	ownerAddr := "cosmos1jxnhwpk5q3kvz2xyz9lfdq5kmlqxkp5kcc90vp"
 
 	reqObject := putOnMarketNFTReq{
 		rest.BaseReq{
