@@ -75,7 +75,7 @@ func GetRelayPacket(cliCtxSource, cliCtx context.CLIContext) (ibc.Packet, ibc.Pr
 	}
 	cdc.MustUnmarshalBinaryBare(packetbz, &packet)
 
-	return packet, proof, nil
+	return &packet, proof, nil
 }
 
 // Copied from client/context/query.go
