@@ -11,19 +11,25 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/lcd"
 	"github.com/cosmos/cosmos-sdk/client/rpc"
 	"github.com/cosmos/cosmos-sdk/client/tx"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/version"
+	authcmd "github.com/cosmos/cosmos-sdk/x/auth/client/cli"
+	bankcmd "github.com/cosmos/cosmos-sdk/x/bank/client/cli"
+	ibccli "github.com/cosmos/cosmos-sdk/x/ibc/client/cli"
+	app "github.com/dgamingfoundation/hackatom-zone"
+	"github.com/dgamingfoundation/hackatom-zone/x/nftapp/types"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	amino "github.com/tendermint/go-amino"
 	"github.com/tendermint/tendermint/libs/cli"
-
-	sdk "github.com/cosmos/cosmos-sdk/types"
-	authcmd "github.com/cosmos/cosmos-sdk/x/auth/client/cli"
-	bankcmd "github.com/cosmos/cosmos-sdk/x/bank/client/cli"
-	app "github.com/dgamingfoundation/hackatom-zone"
 )
 
 func GetCLIContext() context.CLIContext {
+	viper.Set(ibccli.FlagConnectionID, types.ConnectionID)
+	viper.Set(ibccli.FlagChannelID, types.ChannelID)
+	viper.Set(ibccli.FlagClientID, types.ClientID)
+	viper.Set(ibccli.FlagCounterpartyID, types.CounterpartyID)
+	viper.Set(ibccli.FlagCounterpartyClientID, types.CounterpartyClientID)
 	viper.Set("home", "~/.nftcli")
 
 	cobra.EnableCommandSorting = false

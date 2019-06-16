@@ -14,6 +14,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/version"
 	authcmd "github.com/cosmos/cosmos-sdk/x/auth/client/cli"
 	bankcmd "github.com/cosmos/cosmos-sdk/x/bank/client/cli"
+	ibccli "github.com/cosmos/cosmos-sdk/x/ibc/client/cli"
+	"github.com/dgamingfoundation/hackatom-zone/x/nftapp/types"
 	app "github.com/dgamingfoundation/hackatom-zoneB"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -27,7 +29,12 @@ const (
 )
 
 func GetCLIContext() context.CLIContext {
+	viper.Set(ibccli.FlagConnectionID, types.ConnectionID)
+	viper.Set(ibccli.FlagClientID, types.ClientID)
+	viper.Set(ibccli.FlagCounterpartyID, types.CounterpartyID)
+	viper.Set(ibccli.FlagCounterpartyClientID, types.CounterpartyClientID)
 	viper.Set("home", "~/.bnftcli")
+
 	cobra.EnableCommandSorting = false
 
 	cdc := app.MakeCodec()
@@ -140,4 +147,5 @@ func initConfig(cmd *cobra.Command) error {
 		return err
 	}
 	return viper.BindPFlag(cli.OutputFlag, cmd.PersistentFlags().Lookup(cli.OutputFlag))
+
 }
