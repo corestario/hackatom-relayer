@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	app "github.com/dgamingfoundation/hackatom-marketplace"
 	"io/ioutil"
 	"net/http"
 
@@ -20,6 +21,8 @@ import (
 	ibc "github.com/cosmos/cosmos-sdk/x/ibc/keeper"
 	"github.com/dgamingfoundation/hackatom-zone/x/nftapp/types"
 	"github.com/spf13/viper"
+	sdk "github.com/cosmos/cosmos-sdk/types"
+
 )
 
 func main() {
@@ -37,7 +40,7 @@ func main() {
 		panic(fmt.Errorf("failed to unmarshal SellTokenPacket: %v", err))
 	}
 
-	fmt.Printf("%+v\n", st)
+	fmt.Printf("------------%+v\n", st)
 
 	//curl
 	err = sendTokenToHub(st)
@@ -120,7 +123,7 @@ type putOnMarketNFTReq struct {
 	BaseReq rest.BaseReq `json:"base_req"`
 	Owner   string       `json:"owner"`
 	Token   types.BaseNFT `json:"token"`
-	Price   string       `json:"price"`
+	Price   sdk.Coin    `json:"price"`
 
 	// User data
 	Name     string `json:"name"`
@@ -128,29 +131,32 @@ type putOnMarketNFTReq struct {
 }
 
 func sendTokenToHub(st types.SellTokenPacket) error {
-	hubURL := "http://localhost:1317/nft/sell"
-	ownerName := "jack"
+	hubURL := "http://localhost:1317/hh/nft/sell"
+	ownerName := "validator1"
 	ownerPassword := "12345678"
-	ownerAddr := "aabbccdd00ff"
+	ownerAddr := "cosmos16y2vaas25ea8n353tfve45rwvt4sx0gl627pzn"
+
 
 	reqObject := putOnMarketNFTReq{
 		rest.BaseReq{
-			From: ownerName,
+			From: ownerAddr,
 			ChainID: "hhchain",
-			Sequence: 0,
-			AccountNumber: 1,
+			Sequence: 3,
+			AccountNumber: 0,
 		},
 		ownerAddr,
 		*st.Token,
-		st.Price.String(),
+		st.Price,
 		ownerName,
 		ownerPassword,
 	}
 
-	reqBytes, err := json.Marshal(reqObject)
+	cdc:=app.MakeCodec()
+	reqBytes, err := cdc.MarshalJSON(reqObject)
 	if err != nil {
 		return err
 	}
+	fmt.Println(string(reqBytes))
 
 	req, err := http.NewRequest("POST", hubURL, bytes.NewBuffer(reqBytes))
 	req.Header.Set("Content-Type", "application/json")
