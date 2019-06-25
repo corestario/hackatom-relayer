@@ -12,15 +12,14 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/cosmos/cosmos-sdk/types/rest"
-	"github.com/cosmos/cosmos-sdk/x/ibc/23-commitment/merkle"
-	app "github.com/dgamingfoundation/hackatom-marketplace"
-
 	cliCtx "github.com/cosmos/cosmos-sdk/client/context"
 	"github.com/cosmos/cosmos-sdk/store/state"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/cosmos/cosmos-sdk/types/rest"
+	"github.com/cosmos/cosmos-sdk/x/ibc/23-commitment/merkle"
 	"github.com/cosmos/cosmos-sdk/x/ibc/client/cli"
 	ibc "github.com/cosmos/cosmos-sdk/x/ibc/keeper"
+	app "github.com/dgamingfoundation/hackatom-marketplace"
 	"github.com/dgamingfoundation/hackatom-zone/x/nftapp/types"
 	"github.com/spf13/viper"
 	rpcclient "github.com/tendermint/tendermint/rpc/client"
